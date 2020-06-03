@@ -4,17 +4,23 @@ declare(strict_types=1);
 
 namespace Deviant;
 
-use Deviant\Component\Request;
+use Deviant\Component\Container;
 use Deviant\Component\Response;
+use Deviant\Component\Request;
 use Deviant\Component\Router;
 use Exception;
 
 class App
 {
     /**
-     * @var Router
+     * @var Container
      */
-    private Router $router;
+    private Container $container;
+
+    /**
+     * @var Response
+     */
+    private Response $response;
 
     /**
      * @var Request
@@ -22,15 +28,24 @@ class App
     private Request $request;
 
     /**
-     * @var Response
+     * @var Router
      */
-    private Response $response;
+    private Router $router;
 
     public function __construct()
     {
-        $this->router = new Router();
-        $this->request = new Request();
+        $this->container = new Container();
         $this->response = new Response();
+        $this->request = new Request();
+        $this->router = new Router();
+    }
+
+    /**
+     * @return Container
+     */
+    public function getContainer(): Container
+    {
+        return $this->container;
     }
 
     /**
@@ -82,11 +97,13 @@ class App
         [$callable, $arguments] = $this->router->get();
 
         if (is_array($callable)) {
-            $object = new $callable[0];
+            $object = new $callable[0]($this->container);
             $method = $callable[1];
 
             return $object->$method($this->response, $this->request, $arguments);
         }
+
+        $callable = $callable->bindTo($this->container);
 
         return $callable($this->response, $this->request, $arguments);
     }

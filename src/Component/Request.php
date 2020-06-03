@@ -7,7 +7,6 @@ namespace Deviant\Component;
 class Request
 {
     private const METHOD_GET = 'GET';
-
     private const METHOD_POST = 'POST';
 
     /**

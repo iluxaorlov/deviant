@@ -11,7 +11,7 @@ class Router
     /**
      * @var array
      */
-    private array $routes;
+    private array $storage = [];
 
     /**
      * @param string $route
@@ -25,7 +25,7 @@ class Router
 
         $route = trim($route, '/');
 
-        $this->routes[$route] = $callable;
+        $this->storage[$route] = $callable;
     }
 
     /**
@@ -36,7 +36,7 @@ class Router
     {
         $uri = trim($_SERVER['REQUEST_URI'], '/');
 
-        foreach ($this->routes as $route => $callable) {
+        foreach ($this->storage as $route => $callable) {
             $pattern = '|^' . preg_replace('/{(\w+)}/', '(?<$1>\w+)', $route) . '$|';
 
             if (preg_match($pattern, $uri, $matches)) {

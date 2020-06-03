@@ -3,5 +3,8 @@
         "psr-4": {
             "Deviant\\": "src"
         }
+    },
+    "require": {
+        "ext-json": "*"
     }
 }
