@@ -1,10 +1,23 @@
 {
+    "name": "iluxaorlov/deviant",
+    "type": "library",
+    "description": "The Deviant PHP micro framework",
+    "keywords": ["micro", "framework"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ilya Orlov",
+            "email": "iluxaorlov@yandex.ru",
+            "homepage": "https://github.com/iluxaorlov"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Deviant\\": "src"
         }
     },
     "require": {
+        "php": "^7.4",
         "ext-json": "*"
     }
 }
