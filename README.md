@@ -1,9 +1,11 @@
 # The Deviant Framework
 
 ## Установка фреймворка
-Рекомендую воспользоваться Composer для установки:
+Рекомендую воспользоваться [Composer](https://getcomposer.org/) для установки:
 
-```composer require iluxaorlov/deviant```
+```
+$ composer require iluxaorlov/deviant
+```
 
 ## Начало работы
 Создаем файл `public/index.php` с базовым содержимым:
@@ -36,6 +38,10 @@ $app->run();
 
 Проверяем наше приложение при помощи встроенного сервера PHP:
 
-```$ php -S localhost:8000 -t public```
+```
+$ php -S localhost:8000 -t public
+```
 
 Переходим по адресу http://localhost:8000/ и видим надпись "Hello World"
+
+[Composer]: https://getcomposer.org/
