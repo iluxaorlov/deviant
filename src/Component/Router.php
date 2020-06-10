@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Deviant\Component;
 
-use Exception;
+use Deviant\Exception\NotFoundException;
 
 class Router
 {
@@ -30,7 +30,8 @@ class Router
 
     /**
      * @return array
-     * @throws Exception
+     *
+     * @throws NotFoundException
      */
     public function get(): array
     {
@@ -46,6 +47,6 @@ class Router
             }
         }
 
-        throw new Exception('404 Not Found');
+        throw new NotFoundException('404 Not Found', 404);
     }
 }

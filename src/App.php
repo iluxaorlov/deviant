@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Deviant;
 
 use Deviant\Component\Container;
-use Deviant\Component\Response;
 use Deviant\Component\Request;
+use Deviant\Component\Response;
 use Deviant\Component\Router;
 use Exception;
 
@@ -75,15 +75,13 @@ class App
         try {
             $response = $this->handle();
 
-            http_response_code($response->getCode());
-
-            foreach ($response->getHeaders() as $key => $value) {
-                header($key . ':' . $value);
-            }
-
-            echo $response->getBody();
+            $this->emit($response);
         } catch (Exception $e) {
-            echo $e->getMessage();
+            $response = new Response();
+            $response->withBody($e->getMessage());
+            $response->withCode($e->getCode());
+
+            $this->emit($response);
         }
     }
 
@@ -106,5 +104,19 @@ class App
         $callable = $callable->bindTo($this->container);
 
         return $callable($this->response, $this->request, $arguments);
+    }
+
+    /**
+     * @param Response $response
+     */
+    private function emit(Response $response): void
+    {
+        http_response_code($response->getCode());
+
+        foreach ($response->getHeaders() as $key => $value) {
+            header($key . ':' . $value);
+        }
+
+        echo $response->getBody();
     }
 }
